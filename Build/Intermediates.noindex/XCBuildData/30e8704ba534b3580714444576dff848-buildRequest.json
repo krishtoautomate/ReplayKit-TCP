@@ -1,0 +1,71 @@
+{
+  "_buildCommand2" : {
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildOnly"
+  },
+  "buildCommand" : "build",
+  "configuredTargets" : [
+    {
+      "guid" : "34035b05e276ffb48d02f0434e23ca987b3a3790e5edbbdad0389260928cd76a"
+    }
+  ],
+  "containerPath" : "/Users/home/Downloads/ReplayKit-TCP-master 2/replaykit2.xcodeproj",
+  "continueBuildingAfterErrors" : false,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64e",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : true,
+      "platform" : "iphoneos",
+      "sdk" : "iphoneos15.2",
+      "sdkVariant" : "iphoneos",
+      "supportedArchitectures" : [
+        "armv4t",
+        "armv5",
+        "armv6",
+        "armv7",
+        "armv7f",
+        "armv7s",
+        "armv7k",
+        "arm64",
+        "arm64e"
+      ],
+      "targetArchitecture" : "arm64e"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/home/Downloads/ReplayKit-TCP-master 2/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/home/Downloads/ReplayKit-TCP-master 2/Build/Products",
+      "derivedDataPath" : "/Users/home/Downloads/ReplayKit-TCP-master 2",
+      "indexDataStoreFolderPath" : "/Users/home/Downloads/ReplayKit-TCP-master 2/Index/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/home/Downloads/ReplayKit-TCP-master 2/Index/PrecompiledHeaders",
+      "pchPath" : "/Users/home/Downloads/ReplayKit-TCP-master 2/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Release",
+    "overrides" : {
+      "commandLine" : {
+        "table" : {
+          "SDKROOT" : "iphoneos15.2"
+        }
+      },
+      "synthesized" : {
+        "table" : {
+          "COLOR_DIAGNOSTICS" : "YES",
+          "diagnostic_message_length" : "80",
+          "ENABLE_PREVIEWS" : "NO"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "schemeCommand2" : "test",
+  "shouldCollectMetrics" : false,
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}
