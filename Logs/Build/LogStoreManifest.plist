@@ -40,40 +40,6 @@
 			<key>uniqueIdentifier</key>
 			<string>23428D13-BBEF-4F0F-8A09-B9921F71DFFA</string>
 		</dict>
-		<key>540FB815-8C45-4CAE-A32D-726D7D80E864</key>
-		<dict>
-			<key>className</key>
-			<string>IDECommandLineBuildLog</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>540FB815-8C45-4CAE-A32D-726D7D80E864.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>E</string>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>replaykit2 project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>replaykit2UITests</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Building project replaykit2 for testing with scheme replaykit2UITests</string>
-			<key>timeStartedRecording</key>
-			<real>690914520.92832506</real>
-			<key>timeStoppedRecording</key>
-			<real>690914521.65265095</real>
-			<key>title</key>
-			<string>Building project replaykit2 for testing with scheme replaykit2UITests</string>
-			<key>uniqueIdentifier</key>
-			<string>540FB815-8C45-4CAE-A32D-726D7D80E864</string>
-		</dict>
 	</dict>
 </dict>
 </plist>

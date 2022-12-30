@@ -1,6 +1,6 @@
-dependencies: /Users/home/Downloads/ReplayKit-TCP-master\ 2/FBTCPSocket.m \
-  /Users/home/Downloads/ReplayKit-TCP-master\ 2/FBTCPSocket.h \
-  /Users/home/Downloads/ReplayKit-TCP-master\ 2/GCDAsyncSocket.h \
+dependencies: /Users/home/ReplayKit-TCP-master/FBTCPSocket.m \
+  /Users/home/ReplayKit-TCP-master/FBTCPSocket.h \
+  /Users/home/ReplayKit-TCP-master/GCDAsyncSocket.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.2.sdk/usr/include/kcdata.modulemap \
   /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.2.sdk/usr/include/uuid.modulemap \
   /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.2.sdk/usr/include/netinet6.modulemap \

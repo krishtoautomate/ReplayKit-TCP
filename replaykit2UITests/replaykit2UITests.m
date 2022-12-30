@@ -38,54 +38,68 @@ NSString* deviceName()
 - (void)testExample {
     [self disableWaitForIdle];
     // UI tests must launch the application that they test.
-    XCUIApplication *app = [[XCUIApplication alloc] init];
+    XCUIApplication *sb = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.springboard"];
+    
+//    XCUIElement *cancel = [[sb alerts] elementBoundByIndex:0];
+//
+//    if ([cancel exists]) {
+//        [[[cancel buttons] elementBoundByIndex:0] tap];
+//    }
 
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    
     [app launch];
+    
     
 //    sleep(5);
     
     CGSize size = [[[app windows] elementBoundByIndex:0] frame].size;
     
-    NSString * model = deviceName();
-    float x = 0;
-    float y = 0;
     
+        
+    XCUIElement *startBroadCastButton = [self findButton: @"Start Broadcast" withSB:sb and:app];
     
-//    if([model isEqualToString: @"iPhoneX,8"]) {
-//        x = size.width/2;
-//        y = 546;
-//    } else {
-//        // works iphone se, X, XS, iphone 7,8,SE 2nd and 3rd Gen, iphone xr, 14.
-//        x = size.width/2;
-//        y = size.height * 0.60;
-//    }
+    if ([startBroadCastButton exists]) {
+        [startBroadCastButton tap];
+    } else {
+        [app activate];
+        XCUIElement *alert = [[sb alerts] objectForKeyedSubscript: @"Screen Broadcasting"];
+        if ([alert waitForExistenceWithTimeout:5]) {
+            XCUIElement *okButton = [[alert buttons] elementBoundByIndex: 0];
+            if ([okButton exists]) {
+                [okButton tap];
+                
+                //sleep(1);
+                
+                XCUIElement *replayKitPopup =  [[app buttons] elementBoundByIndex:0];
+                
+                if ([replayKitPopup waitForExistenceWithTimeout:2]) {
+                    [replayKitPopup tap];
+                    startBroadCastButton = [self findButton: @"Start Broadcast" withSB:sb and:app];
+                    
+                    if ([startBroadCastButton exists]) {
+                        [startBroadCastButton tap];
+                    }
+                }
+            }
+        }
+        
     
-    NSLog(@"Model=%@ X= %f, Y= %f",model, x, y);
-    //[app waitForState:XCUIApplicationStateRunningForeground timeout: 0.5];
-    
-    XCUIApplication *sb = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.springboard"];
-            
-    XCUIElement *ele = [[sb buttons] elementBoundByIndex:0];
-    
-    if(![ele exists]) {
-        ele = [[app staticTexts] objectForKeyedSubscript: @"Start Broadcast"];
+
     }
-    //sleep(1);
-    
-    [ele tap];
     
     sleep(5);
 
     //Tap on Start Button
 //[[[app coordinateWithNormalizedOffset:CGVectorMake(0, 0)] coordinateWithOffset:CGVectorMake(x, y)] tap];
     
-    //sleep(5);
+//    sleep(5);
     //Dismiss Model
     [[[app coordinateWithNormalizedOffset:CGVectorMake(0, 0)] coordinateWithOffset:CGVectorMake(size.width/2, 100)] tap];
     
 //    sleep(1);
     
-//    [app terminate];
+    [app terminate];
 
     // Use recording to get started writing UI tests.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
@@ -103,6 +117,24 @@ NSString* deviceName()
     Method swizzledMethod = class_getInstanceMethod([self class], swizzledSelector);
 
     method_exchangeImplementations(originalMethod, swizzledMethod);
+}
+
+- (XCUIElement*) findButton: (NSString*) label withSB: (XCUIApplication*) sbApp and:(XCUIApplication*) mainApp {
+
+    XCUIElement *ele = [[sbApp buttons] objectForKeyedSubscript: label];
+    
+    if ( [ele waitForExistenceWithTimeout: 2]) {
+        return  ele;
+    }
+    
+    ele = [[mainApp buttons] objectForKeyedSubscript: label];
+    
+    if ( [ele waitForExistenceWithTimeout: 2]) {
+        return  ele;
+    }
+    
+    return nil;
+    
 }
 
 @end

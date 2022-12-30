@@ -1,0 +1,8 @@
+Target dependency graph (4 targets)
+extensionSetupUI in replaykit2, no dependencies
+extension in replaykit2, no dependencies
+replaykit2 in replaykit2, depends on:
+extensionSetupUI in replaykit2 (explicit)
+extension in replaykit2 (explicit)
+replaykit2UITests in replaykit2, depends on:
+replaykit2 in replaykit2 (explicit)

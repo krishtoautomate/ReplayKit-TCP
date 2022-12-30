@@ -1,6 +1,5 @@
-dependencies: \
-  /Users/home/Downloads/ReplayKit-TCP-master\ 2/replaykit2/AppDelegate.m \
-  /Users/home/Downloads/ReplayKit-TCP-master\ 2/replaykit2/AppDelegate.h \
+dependencies: /Users/home/ReplayKit-TCP-master/replaykit2/AppDelegate.m \
+  /Users/home/ReplayKit-TCP-master/replaykit2/AppDelegate.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.2.sdk/usr/include/kcdata.modulemap \
   /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.2.sdk/usr/include/uuid.modulemap \
   /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.2.sdk/usr/include/netinet6.modulemap \
