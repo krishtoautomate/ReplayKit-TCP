@@ -600,7 +600,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2.test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -629,7 +629,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2.test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -652,7 +652,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2.extensionSetupUI";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2.test.extensionSetupUI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -665,7 +665,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J424C773PX;
+				DEVELOPMENT_TEAM = J2CG2L256C;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = extensionSetupUI/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = extensionSetupUI;
@@ -676,7 +676,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2.extensionSetupUI";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2.test.extensionSetupUI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -700,7 +700,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2.extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2.test.extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -724,7 +724,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2.extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2.test.extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -740,7 +740,7 @@
 				DEVELOPMENT_TEAM = J424C773PX;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2UITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2UITests.test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -756,7 +756,7 @@
 				DEVELOPMENT_TEAM = J424C773PX;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2UITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rdp.-replaykit2.replaykit2UITests.test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";

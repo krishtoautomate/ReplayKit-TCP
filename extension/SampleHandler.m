@@ -16,14 +16,14 @@
 VTCompressionOutputHandler outputHandler;
 bool isWriting = false;
 
-NSString* deviceName()
-    {
-        struct utsname systemInfo;
-        uname(&systemInfo);
+-(NSString*) deviceName
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
     
-        return [NSString stringWithCString:systemInfo.machine
-                                  encoding:NSUTF8StringEncoding];
-    }
+    return [NSString stringWithCString:systemInfo.machine
+                              encoding:NSUTF8StringEncoding];
+}
 
 - (void)broadcastStartedWithSetupInfo:(NSDictionary<NSString *,NSObject *> *)setupInfo {
     // User has requested to start the broadcast. Setup info from the UI extension can be supplied but optional.
@@ -37,7 +37,7 @@ NSString* deviceName()
     
     self.port = 8000;
     
-    NSString *model = deviceName();
+    NSString *model = [self deviceName];
     
     bool flipOrientation = false;
     if ([model  isEqual: @"iPad14,1"] || [model  isEqual: @"iPad14,2"] ) {
@@ -116,7 +116,7 @@ NSString* deviceName()
         
         NSData *screenshotData = [[NSData alloc] initWithBytes:dataPointerOut length: totalLengthOut];
         
-        [[self.tcpServer delegate] set:screenshotData];
+        [[self.tcpServer delegate] set:screenshotData and: [self orientation]];
     };
 }
 
@@ -163,6 +163,14 @@ NSString* deviceName()
     }
     
     CMTime time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+    
+    CFStringRef RPVideoSampleOrientationKeyRef = (__bridge CFStringRef)RPVideoSampleOrientationKey;
+
+    NSNumber *orientation = (NSNumber *) CMGetAttachment(sampleBuffer, RPVideoSampleOrientationKeyRef, nil);
+    
+    [self setOrientation: orientation];
+
+    NSLog(@"info:%@", orientation);
     
     VTCompressionSessionEncodeFrameWithOutputHandler(self.session, imageBuffer, time, kCMTimeInvalid, nil, nil, outputHandler);
 }

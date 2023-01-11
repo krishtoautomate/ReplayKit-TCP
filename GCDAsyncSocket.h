@@ -151,6 +151,9 @@ typedef NS_ERROR_ENUM(GCDAsyncSocketErrorDomain, GCDAsyncSocketError) {
 **/
 @property (atomic, strong, readwrite, nullable) id userData;
 
+@property (nonatomic, readwrite) BOOL isHeadRequest;
+
+
 #pragma mark Accepting
 
 /**

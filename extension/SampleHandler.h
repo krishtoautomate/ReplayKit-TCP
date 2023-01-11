@@ -17,4 +17,6 @@
 @property (nonatomic) FBTCPSocket *tcpServer;
 @property (nonatomic) uint16_t port;
 @property (nonatomic) VTCompressionSessionRef session;
+@property (nonatomic) NSNumber *orientation;
+
 @end

@@ -28,6 +28,7 @@ static const char *QUEUE_NAME = "JPEG Screenshots Provider Queue";
 @property (nonatomic, readonly) mach_timebase_info_data_t timebaseInfo;
 @property (nonatomic, readonly) long long mainScreenID;
 @property (nonatomic) const NSData * screenshotData;
+@property (nonatomic) const NSNumber * orientation;
 
 @end
 
@@ -84,13 +85,13 @@ static const char *QUEUE_NAME = "JPEG Screenshots Provider Queue";
     }
     
     @synchronized (self) {
-        if (nil == _screenshotData || _screenshotData.length == 0) {
+        if (nil == _screenshotData || _screenshotData.length == 0 || _orientation == nil) {
             
             [self scheduleNextScreenshotWithInterval:timerInterval timeStarted:timeStarted];
             return;
         }
         
-        [self sendScreenshot:_screenshotData];
+        [self sendScreenshot: _screenshotData and: _orientation];
         
         
         [self scheduleNextScreenshotWithInterval:timerInterval timeStarted:timeStarted];
@@ -98,15 +99,29 @@ static const char *QUEUE_NAME = "JPEG Screenshots Provider Queue";
 }
 
 
-- (void)sendScreenshot:(NSData *)screenshotData {
+- (void)sendScreenshot:(NSData *)screenshotData and: (NSNumber * ) orientation {
     
-    NSString *chunkHeader = [NSString stringWithFormat:@"--BoundaryString\r\nContent-type: image/jpg\r\nContent-Length: %@\r\n\r\n", @(screenshotData.length)];
-    NSMutableData *chunk = [[chunkHeader dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
-    [chunk appendData:screenshotData];
-    [chunk appendData:(id)[@"\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+   
     @synchronized (self.listeningClients) {
         for (GCDAsyncSocket *client in self.listeningClients) {
-            [client writeData:chunk withTimeout:-1 tag:0];
+            NSString *chunkHeader = nil;
+            
+            if(client.isHeadRequest)
+            {
+                chunkHeader = [NSString stringWithFormat:@"--BoundaryString\r\nContent-type: image/jpg\r\nX-Orientation: %@\r\n\r\n", orientation];
+                
+                NSMutableData *chunk = [[chunkHeader dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+                [chunk appendData:(id)[@"\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+                [client writeData:chunk withTimeout:-1 tag:0];
+                
+            } else {
+                chunkHeader = [NSString stringWithFormat:@"--BoundaryString\r\nContent-type: image/jpg\r\nContent-Length: %@\r\n\r\n", @(screenshotData.length)];
+                NSMutableData *chunk = [[chunkHeader dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+                [chunk appendData:screenshotData];
+                [chunk appendData:(id)[@"\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+                [client writeData:chunk withTimeout:-1 tag:0];
+            }
+            
         }
     }
 }
@@ -123,21 +138,27 @@ static const char *QUEUE_NAME = "JPEG Screenshots Provider Queue";
     [newClient readDataWithTimeout:-1 tag:0];
 }
 
-- (void)didClientSendData:(GCDAsyncSocket *)client
-{
+- (void)did:(GCDAsyncSocket *)client Send:(NSData *)data {
+   
     @synchronized (self.listeningClients) {
         if ([self.listeningClients containsObject:client]) {
             return;
         }
     }
     
+    NSString *request = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    NSString *streamHeader = [NSString stringWithFormat:@"HTTP/1.0 200 OK\r\nServer: %@\r\nConnection: close\r\nMax-Age: 0\r\nExpires: 0\r\nCache-Control: no-cache, private\r\nPragma: no-cache\r\nContent-Type: multipart/x-mixed-replace; boundary=--BoundaryString\r\n\r\n", SERVER_NAME];
+    
+    NSString *streamHeader = [NSString stringWithFormat:@"HTTP/1.0 200 OK\r\nServer: %@\r\nConnection: close\r\nMax-Age: 0\r\nExpires: 0\r\nCache-Control: no-cache, private\r\nPragma: no-cache\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: multipart/x-mixed-replace; boundary=--BoundaryString\r\n\r\n", SERVER_NAME];
     [client writeData:(id)[streamHeader dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
     @synchronized (self.listeningClients) {
+        
+        [client setIsHeadRequest: [request containsString: @"/info"]];
+        
         [self.listeningClients addObject:client];
     }
 }
+
 
 - (void)didClientDisconnect:(GCDAsyncSocket *)client
 {
@@ -146,9 +167,10 @@ static const char *QUEUE_NAME = "JPEG Screenshots Provider Queue";
     }
 }
 
-- (void)set:(NSData *)data {
+- (void)set:(NSData *)data and: (NSNumber *) orientation {
     @synchronized (self) {
         self.screenshotData  = data;
+        self.orientation = orientation;
     }
 }
 

@@ -13,8 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol FBTCPSocketDelegate
 
-- (void)set:(NSData *)data;
-
+- (void)set:(NSData *)data and: (NSNumber *) orientation;
 /**
  The callback which is fired on new TCP client connection
 
@@ -27,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param client The client, which sent the data
 */
-- (void)didClientSendData:(GCDAsyncSocket *)client;
+- (void) did:(GCDAsyncSocket *) client Send: (NSData *)  data;
 
 /**
  The callback which is fired when TCP client disconnects
