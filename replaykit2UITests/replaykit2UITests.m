@@ -35,18 +35,26 @@ NSString* deviceName()
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
+- (void)testOrientationLeft {
+    [[XCUIDevice sharedDevice] setOrientation: UIDeviceOrientationLandscapeLeft];
+}
+
+- (void)testOrientationRight {
+    [[XCUIDevice sharedDevice] setOrientation: UIDeviceOrientationLandscapeRight];
+}
+
+- (void)testOrientationUp {
+    [[XCUIDevice sharedDevice] setOrientation: UIDeviceOrientationPortrait];
+}
+
+- (void)testOrientationDown {
+    [[XCUIDevice sharedDevice] setOrientation: UIDeviceOrientationPortraitUpsideDown];
+}
+
+
 - (void)testExample {
     
-    NSString* orientationStr = [[[NSProcessInfo processInfo] environment] objectForKeyedSubscript: @"ORIENTATION"];
-    
-    if (orientationStr) {
-        [self setOrientation: orientationStr];
-    }
-    else {
-        [self automateReplayKit];
-    }
-    
-    
+    [self automateReplayKit];
 }
 
 -(void) replace {
@@ -129,7 +137,7 @@ NSString* deviceName()
 }
 
 -(void) setOrientation: (NSString*) orientationStr {
-    
+
     int orientation = [orientationStr intValue];
     
     switch(orientation) {
