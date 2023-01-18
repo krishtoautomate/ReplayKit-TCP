@@ -51,6 +51,25 @@ NSString* deviceName()
     [[XCUIDevice sharedDevice] setOrientation: UIDeviceOrientationPortraitUpsideDown];
 }
 
+-(void)testListenForAlerts {
+    XCUIApplication *sb = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.springboard"];
+    printf("");
+    
+    while (true) {
+        if ([sb alerts] != nil && [sb alerts].count > 0) {
+            XCUIElement *alert = [[sb alerts] elementBoundByIndex:0];
+            
+            if (alert && [alert buttons].count > 0) {
+                NSLog(@"Alert Found: %@", alert.label);
+                [[[alert buttons] elementBoundByIndex:0] tap];
+            }
+        }
+        
+        sleep(2);
+    }
+    
+}
+
 
 - (void)testExample {
     
