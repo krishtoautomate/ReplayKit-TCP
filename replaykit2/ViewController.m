@@ -19,7 +19,9 @@
     // Do any additional setup after loading the view.
     RPSystemBroadcastPickerView* pickerView = [[RPSystemBroadcastPickerView alloc] initWithFrame: self.view.frame];
     [pickerView setShowsMicrophoneButton:false];
-    [pickerView setPreferredExtension: @"com.rdp.-replaykit2.replaykit2.testml.extension"];
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *extension = [NSString stringWithFormat: @"%@%@", bundleIdentifier, @".extension"];
+    [pickerView setPreferredExtension:  extension];
     
     for(UIView * view in [pickerView subviews])
     {
