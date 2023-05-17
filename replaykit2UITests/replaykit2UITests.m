@@ -47,7 +47,7 @@
 -(void)testListenForAlerts {
     XCUIApplication *sb = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.springboard"];
     int timeout = 2;
-    NSArray<NSString*> *buttonList = @[@"Ok", @"Allow", @"Allow While Using App", @"Only While Using the App", @"Alllow While in Use"];
+    NSArray<NSString*> *buttonList = @[@"Ok", @"Allow", @"Allow While Using App", @"Only While Using the App", @"Allow While in Use"];
     
     while (true) {
         if ([sb alerts] != nil && [sb alerts].count > 0) {
