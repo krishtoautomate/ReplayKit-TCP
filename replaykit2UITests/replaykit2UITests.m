@@ -8,14 +8,7 @@
 #import <XCTest/XCTest.h>
 @import ObjectiveC.runtime;
 #import <sys/utsname.h>
-NSString* deviceName()
-{
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    
-    return [NSString stringWithCString:systemInfo.machine
-                              encoding:NSUTF8StringEncoding];
-}
+
 @interface replaykit2UITests : XCTestCase
 
 @end
@@ -55,7 +48,7 @@ NSString* deviceName()
     XCUIApplication *sb = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.springboard"];
     printf("");
     
-    while (true) {
+    while (true) { 
         if ([sb alerts] != nil && [sb alerts].count > 0) {
             XCUIElement *alert = [[sb alerts] elementBoundByIndex:0];
             
@@ -71,11 +64,6 @@ NSString* deviceName()
 }
 
 
-- (void)testExample {
-    
-    [self automateReplayKit];
-}
-
 -(void) replace {
     return;
 }
@@ -90,25 +78,21 @@ NSString* deviceName()
     method_exchangeImplementations(originalMethod, swizzledMethod);
 }
 
-- (XCUIElement*) findButton: (NSString*) label withSB: (XCUIApplication*) sbApp and:(XCUIApplication*) mainApp {
+- (XCUIElement*) findButton: (NSString*) label inApps: (NSArray<XCUIApplication*>*) apps {
     
-    XCUIElement *ele = [[sbApp buttons] objectForKeyedSubscript: label];
-    
-    if ( [ele waitForExistenceWithTimeout: 2]) {
-        return  ele;
-    }
-    
-    ele = [[mainApp buttons] objectForKeyedSubscript: label];
-    
-    if ( [ele waitForExistenceWithTimeout: 2]) {
-        return  ele;
+    for (XCUIApplication * app in apps) {
+        XCUIElement *ele = [[app buttons] objectForKeyedSubscript: label];
+        if ( [ele waitForExistenceWithTimeout: 2]) {
+            return  ele;
+        }
     }
     
     return nil;
-    
 }
 
--(void) automateReplayKit {
+
+- (void)testExample {
+    
     [self disableWaitForIdle];
     // UI tests must launch the application that they test.
     XCUIApplication *sb = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.springboard"];
@@ -119,7 +103,10 @@ NSString* deviceName()
     
     CGSize size = [[[app windows] elementBoundByIndex:0] frame].size;
     
-    XCUIElement *startBroadCastButton = [self findButton: @"Start Broadcast" withSB:sb and:app];
+    NSString * startbuttonLabel = @"Start Broadcast";
+    NSString * stopbuttonLabel = @"Stop Broadcast";
+
+    XCUIElement *startBroadCastButton = [self findButton: startbuttonLabel inApps: @[sb, app]];
     
     if ([startBroadCastButton exists]) {
         [startBroadCastButton tap];
@@ -128,8 +115,10 @@ NSString* deviceName()
         XCUIElement *alert = [[sb alerts] objectForKeyedSubscript: @"Screen Broadcasting"];
         if ([alert waitForExistenceWithTimeout:5]) {
             XCUIElement *okButton = [[alert buttons] elementBoundByIndex: 0];
-            if ([okButton exists]) {
-                [okButton tap];
+            if ([okButton exists] && [okButton waitForExistenceWithTimeout:5]) {
+//                [okButton tap];
+                XCUICoordinate* coord = [alert coordinateWithNormalizedOffset: CGVectorMake(0,0)];
+                [[coord coordinateWithOffset: CGVectorMake(10, alert.frame.size.height - 10)] tap];
                 
                 //sleep(1);
                 
@@ -137,7 +126,7 @@ NSString* deviceName()
                 
                 if ([replayKitPopup waitForExistenceWithTimeout:2]) {
                     [replayKitPopup tap];
-                    startBroadCastButton = [self findButton: @"Start Broadcast" withSB:sb and:app];
+                    startBroadCastButton = [self findButton: startbuttonLabel inApps: @[sb, app]];
                     
                     if ([startBroadCastButton exists]) {
                         [startBroadCastButton tap];
@@ -147,13 +136,16 @@ NSString* deviceName()
         }
     }
     
-    sleep(5);
+    XCUIElement *stopBroadCastButton = [self findButton: stopbuttonLabel inApps: @[sb, app]];
+    
+    BOOL _ = [stopBroadCastButton waitForExistenceWithTimeout: 5];
     
     [[[app coordinateWithNormalizedOffset:CGVectorMake(0, 0)] coordinateWithOffset:CGVectorMake(size.width/2, 100)] tap];
     
     [app terminate];
-    
 }
+
+
 
 -(void) setOrientation: (NSString*) orientationStr {
 
