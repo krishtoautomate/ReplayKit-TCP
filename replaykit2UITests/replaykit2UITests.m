@@ -49,60 +49,15 @@
 -(void)testListenForAlerts {
     
     while (true) {
-        [self testListenForAlertsOnce];
+        if ([self listenForAlertsOnce]) {
+            continue;
+        }
         sleep(2);
     }
 }
-
 -(void)testListenForAlertsOnce {
-    XCUIApplication *sb = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.springboard"];
-    int timeout = 2;
-    NSArray<NSString*> *buttonList = @[@"Ok", @"Allow", @"Allow While Using App", @"Only While Using the App", @"Allow While in Use"];
-    
-    if ([sb alerts] != nil && [sb alerts].count > 0) {
-        XCUIElement *alert = [[sb alerts] elementBoundByIndex:0];
-        
-        if (alert && [alert buttons].count > 0) {
-            NSLog(@"Alert Found: %@", alert.label);
-            for (NSString * label in buttonList) {
-                XCUIElement *button = [alert.buttons objectForKeyedSubscript: label];
-                
-                if ([button waitForExistenceWithTimeout: timeout]) {
-                    [button tap];
-                    continue;
-                }
-            }
-        }
-    }
+    [self listenForAlertsOnce];
 }
-
-
--(void) replace {
-    return;
-}
-- (void)disableWaitForIdle {
-    
-    SEL originalSelector = NSSelectorFromString(@"waitForQuiescenceIncludingAnimationsIdle:");
-    SEL swizzledSelector = @selector(replace);
-    
-    Method originalMethod = class_getInstanceMethod(objc_getClass("XCUIApplicationProcess"), originalSelector);
-    Method swizzledMethod = class_getInstanceMethod([self class], swizzledSelector);
-    
-    method_exchangeImplementations(originalMethod, swizzledMethod);
-}
-
-- (XCUIElement*) findButton: (NSString*) label inApps: (NSArray<XCUIApplication*>*) apps {
-    
-    for (XCUIApplication * app in apps) {
-        XCUIElement *ele = [[app buttons] objectForKeyedSubscript: label];
-        if ( [ele waitForExistenceWithTimeout: 2]) {
-            return  ele;
-        }
-    }
-    
-    return nil;
-}
-
 
 - (void)testExample {
     
@@ -177,6 +132,57 @@
             [[XCUIDevice sharedDevice] setOrientation: UIDeviceOrientationPortraitUpsideDown];
             break;
     }
+}
+
+-(BOOL)listenForAlertsOnce {
+    XCUIApplication *sb = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.springboard"];
+    int timeout = 2;
+    NSArray<NSString*> *buttonList = @[@"Ok", @"Allow", @"Allow While Using App", @"Only While Using the App", @"Allow While in Use"];
+    
+    if ([sb alerts] != nil && [sb alerts].count > 0) {
+        XCUIElement *alert = [[sb alerts] elementBoundByIndex:0];
+        
+        if (alert && [alert buttons].count > 0) {
+            NSLog(@"Alert Found: %@", alert.label);
+            for (NSString * label in buttonList) {
+                XCUIElement *button = [alert.buttons objectForKeyedSubscript: label];
+                
+                if ([button waitForExistenceWithTimeout: timeout]) {
+                    [button tap];
+                    return TRUE;;
+                }
+            }
+        }
+    }
+    
+    return FALSE;
+}
+
+
+-(void) replace {
+    return;
+}
+- (void)disableWaitForIdle {
+    
+    SEL originalSelector = NSSelectorFromString(@"waitForQuiescenceIncludingAnimationsIdle:");
+    SEL swizzledSelector = @selector(replace);
+    
+    Method originalMethod = class_getInstanceMethod(objc_getClass("XCUIApplicationProcess"), originalSelector);
+    Method swizzledMethod = class_getInstanceMethod([self class], swizzledSelector);
+    
+    method_exchangeImplementations(originalMethod, swizzledMethod);
+}
+
+- (XCUIElement*) findButton: (NSString*) label inApps: (NSArray<XCUIApplication*>*) apps {
+    
+    for (XCUIApplication * app in apps) {
+        XCUIElement *ele = [[app buttons] objectForKeyedSubscript: label];
+        if ( [ele waitForExistenceWithTimeout: 2]) {
+            return  ele;
+        }
+    }
+    
+    return nil;
 }
 
 
