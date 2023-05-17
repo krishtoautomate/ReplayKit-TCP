@@ -116,11 +116,7 @@
         if ([alert waitForExistenceWithTimeout:5]) {
             XCUIElement *okButton = [[alert buttons] elementBoundByIndex: 0];
             if ([okButton exists] && [okButton waitForExistenceWithTimeout:5]) {
-//                [okButton tap];
-                XCUICoordinate* coord = [alert coordinateWithNormalizedOffset: CGVectorMake(0,0)];
-                [[coord coordinateWithOffset: CGVectorMake(10, alert.frame.size.height - 10)] tap];
-                
-                //sleep(1);
+                [okButton tap];
                 
                 XCUIElement *replayKitPopup =  [[app buttons] elementBoundByIndex:0];
                 
