@@ -46,15 +46,23 @@
 
 -(void)testListenForAlerts {
     XCUIApplication *sb = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.springboard"];
-    printf("");
+    int timeout = 2;
+    NSArray<NSString*> *buttonList = @[@"Ok", @"Allow", @"Allow While Using App", @"Only While Using the App", @"Alllow While in Use"];
     
-    while (true) { 
+    while (true) {
         if ([sb alerts] != nil && [sb alerts].count > 0) {
             XCUIElement *alert = [[sb alerts] elementBoundByIndex:0];
             
             if (alert && [alert buttons].count > 0) {
                 NSLog(@"Alert Found: %@", alert.label);
-                [[[alert buttons] elementBoundByIndex:0] tap];
+                for (NSString * label in buttonList) {
+                    XCUIElement *button = [alert.buttons objectForKeyedSubscript: label];
+                    
+                    if ([button waitForExistenceWithTimeout: timeout]) {
+                        [button tap];
+                        continue;
+                    }
+                }
             }
         }
         
@@ -105,7 +113,7 @@
     
     NSString * startbuttonLabel = @"Start Broadcast";
     NSString * stopbuttonLabel = @"Stop Broadcast";
-
+    
     XCUIElement *startBroadCastButton = [self findButton: startbuttonLabel inApps: @[sb, app]];
     
     if ([startBroadCastButton exists]) {
@@ -144,7 +152,7 @@
 
 
 -(void) setOrientation: (NSString*) orientationStr {
-
+    
     int orientation = [orientationStr intValue];
     
     switch(orientation) {
