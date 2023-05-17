@@ -47,9 +47,6 @@
 // 2 - testExample
 // 3 - testListenForAlerts (run in background)
 -(void)testListenForAlerts {
-    XCUIApplication *sb = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.springboard"];
-    int timeout = 2;
-    NSArray<NSString*> *buttonList = @[@"Ok", @"Allow", @"Allow While Using App", @"Only While Using the App", @"Allow While in Use"];
     
     while (true) {
         [self testListenForAlertsOnce];
@@ -123,14 +120,9 @@
     NSString * stopbuttonLabel = @"Stop Broadcast";
     
     XCUIElement *startBroadCastButton = [self findButton: startbuttonLabel inApps: @[sb, app]];
-    XCUIElement *stopBroadCastButton1 = [self findButton: stopbuttonLabel inApps: @[sb, app]];
 
     if ([startBroadCastButton exists]) {
         [startBroadCastButton tap];
-    }
-    else if ([stopBroadCastButton1 exists]) {
-        [app terminate];
-        return;
     } else {
         [app activate];
         XCUIElement *alert = [[sb alerts] objectForKeyedSubscript: @"Screen Broadcasting"];
