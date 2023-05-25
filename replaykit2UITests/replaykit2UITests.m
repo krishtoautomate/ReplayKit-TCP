@@ -176,7 +176,7 @@
 - (XCUIElement*) findButton: (NSString*) label inApps: (NSArray<XCUIApplication*>*) apps {
     
     for (XCUIApplication * app in apps) {
-        XCUIElement *ele = nil;
+        XCUIElement *ele;
         
         if (@available(iOS 14, *)) {
             ele = [[app buttons] objectForKeyedSubscript: label];
