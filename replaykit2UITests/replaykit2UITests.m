@@ -176,14 +176,16 @@
 - (XCUIElement*) findButton: (NSString*) label inApps: (NSArray<XCUIApplication*>*) apps {
     
     for (XCUIApplication * app in apps) {
-        XCUIElement *ele = [[app buttons] objectForKeyedSubscript: label];
-        XCUIElement *ele1 = [[app staticTexts] objectForKeyedSubscript: label];
-        if ( [ele waitForExistenceWithTimeout: 2]) {
-            return  ele;
+        XCUIElement *ele = nil;
+        
+        if (@available(iOS 14, *)) {
+            ele = [[app buttons] objectForKeyedSubscript: label];
+        } else {
+            ele = [[app staticTexts] objectForKeyedSubscript: label];
         }
         
-        else if ( [ele1 waitForExistenceWithTimeout: 2]) {
-            return  ele1;
+        if ( [ele waitForExistenceWithTimeout: 2]) {
+            return  ele;
         }
     }
     
