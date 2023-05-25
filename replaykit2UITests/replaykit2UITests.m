@@ -177,8 +177,13 @@
     
     for (XCUIApplication * app in apps) {
         XCUIElement *ele = [[app buttons] objectForKeyedSubscript: label];
+        XCUIElement *ele1 = [[app staticTexts] objectForKeyedSubscript: label];
         if ( [ele waitForExistenceWithTimeout: 2]) {
             return  ele;
+        }
+        
+        else if ( [ele1 waitForExistenceWithTimeout: 2]) {
+            return  ele1;
         }
     }
     
